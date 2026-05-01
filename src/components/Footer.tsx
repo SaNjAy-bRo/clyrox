@@ -7,22 +7,21 @@ import { Separator } from "@/components/ui/separator";
 const footerLinks = {
   company: [
     { label: "About Us", href: "#" },
+    { label: "Consulting", href: "/consulting" },
     { label: "Careers", href: "#" },
-    { label: "Blog", href: "#" },
-    { label: "Case Studies", href: "#" },
+    { label: "Contact", href: "/#contact" },
   ],
   services: [
-    { label: "ServiceNow", href: "#services" },
-    { label: "Salesforce", href: "#services" },
-    { label: "SAP", href: "#services" },
-    { label: "Multi-Cloud", href: "#services" },
-    { label: "AI / ML", href: "#services" },
+    { label: "App & Product Dev", href: "/services/application-development" },
+    { label: "Digital Marketing", href: "/services/digital-marketing" },
+    { label: "ERP Integration", href: "/services/erp-integration" },
+    { label: "Data Migration", href: "/services/data-migration" },
   ],
   resources: [
-    { label: "Technology", href: "#technology" },
-    { label: "Consulting", href: "#consulting" },
+    { label: "Case Studies", href: "#" },
     { label: "Certifications", href: "#" },
     { label: "Partners", href: "#" },
+    { label: "Blog", href: "#" },
   ],
 };
 

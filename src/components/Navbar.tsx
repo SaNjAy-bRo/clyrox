@@ -2,21 +2,21 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, ChevronRight } from "lucide-react";
+import { Menu, X, ChevronRight, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 
-const navLinks = [
-  { label: "Services", href: "#services" },
-  { label: "Technology", href: "#technology" },
-  { label: "Consulting", href: "#consulting" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "Contact", href: "#contact" },
+const serviceLinks = [
+  { label: "Application & Product Development", href: "/services/application-development" },
+  { label: "Digital Marketing Services", href: "/services/digital-marketing" },
+  { label: "ERP Integration Services", href: "/services/erp-integration" },
+  { label: "Data Migration Services", href: "/services/data-migration" },
 ];
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 20);
@@ -56,16 +56,45 @@ export function Navbar() {
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className="relative px-4 py-2 text-sm font-medium text-white/80 hover:text-white transition-colors duration-300 group"
-              >
-                {link.label}
-                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-clyrox-gold rounded-full transition-all duration-300 group-hover:w-3/4" />
-              </Link>
-            ))}
+            <Link href="/" className="relative px-4 py-2 text-sm font-medium text-white/80 hover:text-white transition-colors duration-300 group">
+              Home
+              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-clyrox-gold rounded-full transition-all duration-300 group-hover:w-3/4" />
+            </Link>
+
+            {/* Services Dropdown */}
+            <div className="relative group">
+              <span className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-white/80 hover:text-white transition-colors duration-300 cursor-pointer">
+                Services <ChevronDown className="w-3.5 h-3.5" />
+              </span>
+              <div className="absolute top-full left-0 mt-0 pt-2 w-72 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                <div className="bg-clyrox-navy border border-white/10 rounded-xl shadow-2xl shadow-black/40 overflow-hidden backdrop-blur-xl">
+                  {serviceLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="block px-5 py-3.5 text-sm text-white/80 hover:text-clyrox-gold hover:bg-white/5 transition-all duration-200 border-b border-white/5 last:border-b-0"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <Link href="/consulting" className="relative px-4 py-2 text-sm font-medium text-white/80 hover:text-white transition-colors duration-300 group">
+              Consulting
+              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-clyrox-gold rounded-full transition-all duration-300 group-hover:w-3/4" />
+            </Link>
+
+            <Link href="/#testimonials" className="relative px-4 py-2 text-sm font-medium text-white/80 hover:text-white transition-colors duration-300 group">
+              Testimonials
+              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-clyrox-gold rounded-full transition-all duration-300 group-hover:w-3/4" />
+            </Link>
+
+            <Link href="/#contact" className="relative px-4 py-2 text-sm font-medium text-white/80 hover:text-white transition-colors duration-300 group">
+              Contact
+              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-clyrox-gold rounded-full transition-all duration-300 group-hover:w-3/4" />
+            </Link>
           </nav>
 
           {/* Desktop CTA */}
@@ -74,7 +103,7 @@ export function Navbar() {
               asChild
               className="bg-clyrox-gold hover:bg-clyrox-gold-light text-clyrox-dark font-semibold px-6 shadow-lg shadow-clyrox-gold/20 hover:shadow-clyrox-gold/40 transition-all duration-300 cursor-pointer"
             >
-              <Link href="#contact">
+              <Link href="/#contact">
                 Get Started
                 <ChevronRight className="w-4 h-4 ml-1" />
               </Link>
@@ -107,24 +136,53 @@ export function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.4, delay: 0.1 }}
-              className="flex flex-col items-center justify-center h-full gap-6"
+              className="flex flex-col items-center justify-center h-full gap-4"
             >
-              {navLinks.map((link, i) => (
-                <motion.div
-                  key={link.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.15 + i * 0.05 }}
+              <Link href="/" onClick={() => setMobileOpen(false)} className="text-2xl font-medium text-white/90 hover:text-clyrox-gold transition-colors duration-300">
+                Home
+              </Link>
+
+              {/* Services accordion */}
+              <div className="flex flex-col items-center">
+                <button
+                  onClick={() => setServicesOpen(!servicesOpen)}
+                  className="flex items-center gap-2 text-2xl font-medium text-white/90 hover:text-clyrox-gold transition-colors duration-300"
                 >
-                  <Link
-                    href={link.href}
-                    onClick={() => setMobileOpen(false)}
-                    className="text-2xl font-medium text-white/90 hover:text-clyrox-gold transition-colors duration-300"
-                  >
-                    {link.label}
-                  </Link>
-                </motion.div>
-              ))}
+                  Services <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${servicesOpen ? "rotate-180" : ""}`} />
+                </button>
+                <AnimatePresence>
+                  {servicesOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="flex flex-col items-center gap-3 mt-3 overflow-hidden"
+                    >
+                      {serviceLinks.map((link) => (
+                        <Link
+                          key={link.href}
+                          href={link.href}
+                          onClick={() => setMobileOpen(false)}
+                          className="text-base text-white/60 hover:text-clyrox-gold transition-colors"
+                        >
+                          {link.label}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              <Link href="/consulting" onClick={() => setMobileOpen(false)} className="text-2xl font-medium text-white/90 hover:text-clyrox-gold transition-colors duration-300">
+                Consulting
+              </Link>
+              <Link href="/#testimonials" onClick={() => setMobileOpen(false)} className="text-2xl font-medium text-white/90 hover:text-clyrox-gold transition-colors duration-300">
+                Testimonials
+              </Link>
+              <Link href="/#contact" onClick={() => setMobileOpen(false)} className="text-2xl font-medium text-white/90 hover:text-clyrox-gold transition-colors duration-300">
+                Contact
+              </Link>
+
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -136,7 +194,7 @@ export function Navbar() {
                   size="lg"
                   className="bg-clyrox-gold hover:bg-clyrox-gold-light text-clyrox-dark font-semibold px-8 cursor-pointer"
                 >
-                  <Link href="#contact" onClick={() => setMobileOpen(false)}>
+                  <Link href="/#contact" onClick={() => setMobileOpen(false)}>
                     Get Started
                     <ChevronRight className="w-4 h-4 ml-1" />
                   </Link>
